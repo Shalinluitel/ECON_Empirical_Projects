@@ -27,5 +27,8 @@ global predictorvars "rate_black_population_2010 count_person_enrolledincollegeu
 
 reg kfr_pooled_p25 $predictorvars P_* if training == 1, r
 predict rank_hat_ols
+gen pred_error = kfr_pooled_p25 - rank_hat_ols
+gen mse_forest = pred_error^2
+sum mse_forest if training == 1
 order geoid place pop housing kfr_pooled_p25 test training _merge rank_hat_ols
 save "Z:\Desktop\Github\ECON_Empirical_Projects\Empirical_Project_03\GROUP_No_4_project3.dta"
